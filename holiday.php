@@ -2,16 +2,19 @@
 <?php require_once("connect.php"); ?>
 <?php require_once("functions.php"); ?>
 <?php include_once("header.php"); ?>
+
+
+
 <?php    
     if(isset($_POST["submit"])) {
-        $location = ucfirst($_POST["holiday_location"]);
-        $description = ucfirst($_POST["holiday_description"]);
-        $rating = ($_POST["holiday_rating"]);
-        $tags = ($_POST["holiday_tags"]);
-        $picture = ($_POST["holiday_picture"]);
-        $holuser = ucfirst($_POST["holiday_user"]);
+        $forename = ucfirst($_POST["user_forename"]);
+        $surname = ucfirst($_POST["user_surname"]);
+        $dob = ($_POST["user_dob"]);
+        $city = ucfirst($_POST["user_city"]);
+        $username = ucfirst($_POST["user_name"]);
+        $password = ($_POST["user_password"]);
         
-        $query = "INSERT INTO holiday (holiday_location, holiday_description, holiday_rating, holiday_tags, holiday_picture, holiday_user) VALUES ('{$location}','{$description}','{$rating}','{$tags}','{$picture}','{$holuser}',)";
+        $query = "INSERT INTO users (user_forename, user_surname, user_dob, user_city, user_name, user_password) VALUES ('{$forename}','{$surname}','{$dob}','{$city}','{$username}','{$password}',)";
         $result = mysqli_query($connection, $query);
         
         if($result) {
@@ -21,33 +24,87 @@
         }
     } 
 ?>
-<div class="holiday-toggle">
-    <p>Add A Holiday</p>
+   
+
+<div class="login-toggle">
+    <p>Login</p>
 </div>
-<div class="add-holiday">
-            <form action="holidays.php" method="post">
-                <p>Location:</p><input type="text" name="holiday_location" value=""/><br>
-                <p>Description:</p><input type="text" name="holiday_description" value=""/><br>
-                <p>Rating:</p><input type="text" name="holiday_rating" value=""/><br>
-                <p>Tags:</p><input type="text" name="holiday_tags" value=""/><br>
-                <p>Picture:</p><input type="text" name="holiday_picture" value=""/><br>
-                <p>Username:</p><input type="text" name="holiday_user" value=""/><br>
+        <div class="login-box">
+            <form action="login.php" method="post">
+                <p>Username:</p> <input type="text" name="username" value="" /> <br>
+                <p>Password:</p> <input type="password" name="password" value="" /> <br>
                 <br>
-                <input type="submit" name="submit" value="Add"/>
+                <input type="submit" name="login" value="Login" />
+            </form>
+            <p>Don't have an account? <a href=register.php>Register</a> </p>
+        </div>
+
+ <div class="register-toggle">
+     <p>OR <br> Register</p>
+</div>
+     <div class="register">
+            <form action="index.php" method="post">
+                <p>Forename:</p><input type="text" name="user_forename" value=""/><br>
+                <p>Surname:</p><input type="text" name="user_surname" value=""/><br>
+                <p>Date Of Birth:</p><input type="text" name="user_dob" value=""/><br>
+                <p>City:</p><input type="text" name="user_city" value=""/><br>
+                <p>Username:</p><input type="text" name="user_name" value=""/><br>
+                <p>Password:</p><input type="text" name="user_password" value=""/><br>
+                <br>
+                <input type="submit" name="submit" value="Register"/>
             </form>
         </div>
 
+
+
+<style>
+body {
+    background-image: url("holiday.jpg");
+}
+</style>
+
+<style>
+
+h1 {
+    text-align: center;
+}
+
+p.date {
+    text-align: right;
+}
+
+p.main {
+    text-align: justify;
+}
+       
+       </style>
+
+
+<link rel="stylesheet" href ="normal.css"css  type="text/css">
+
+
 <?php
     if(isset($_POST["submit"])) {
-        echo "Location: $location " ;
-        echo "Description: $description " ;
-        echo "Rating: $rating /5 " ;
-        echo "Tags: $tags " ;
-        echo "Picture: $picture " ; 
-        echo "Username: $holuser " ; 
+        echo "Forename: $forename " ;
+        echo "Surname: $surname " ;
+        echo "Date of birth: $dob " ;
+        echo "City: $city " ;
+        echo "Username: $username " ; 
+        echo "Password: $password " ; 
         
     }
 ?>
 
+<?php
+    while($row = my_fetch_assoc($result)) {
         
-<?php include_once("footer.php"); ?>  
+     include 'box.php';
+        
+    }
+?>
+
+
+
+
+        
+<?php require_once("footer.php"); ?>
